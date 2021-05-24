@@ -1,26 +1,27 @@
+import random
+import string
 from elgamal2 import PublicKey
 from Cryptodome.Cipher import AES
 from Elgamal import gen_key
 from AES import aes_encrypt, aes_decrypt
 from SHA import create_hashed_values
-import random
-import string
+
+from string_key import generate_random_key
 
 
-plain_text = "snfjkasjkbfkjsabfaasf"
 
+plain_text = "thisisarandomplaintext"
+password = "1234567" # the password used for AES private key
 
-length = 16
-private_key = "".join(random.choice(string.ascii_lowercase) for x in range(length))
-public_key =  "".join(random.choice(string.ascii_lowercase) for x in range(length))
-
-# SHA
+# hashing the plain text
 hashed_values = create_hashed_values(plain_text)
-print("hashed values", hashed_values)
 
 # AES ()
-aes_enc_msg = aes_encrypt(plain_text, "123456")
-aes_dec_msg = aes_decrypt(aes_enc_msg, "123456")
+aes_encryption_result = aes_encrypt(plain_text, password)
+aes_dec_msg = aes_decrypt(aes_encryption_result, password)
 
-# # Elgamal
-# # digital_signature = str(public_key) + hashed_values
+aes_private_key = aes_encryption_result.get("private_key")
+
+# x = aes_private_key.decode('UTF-8')
+x = str(aes_private_key, 'UTF-16')
+print(x.__len__())
