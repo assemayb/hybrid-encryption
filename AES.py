@@ -50,16 +50,11 @@ def aes_decrypt(enc_dict, password):
     return bytes.decode(decrypted)
 
 def main():
-
     start = time.time()
-
     password = "123456"
     plain_text = "this is the message to encrypt"
     encrypted = aes_encrypt(plain_text, password)
-    print("cipher text", encrypted.get("cipher_text"))
     decrypted = aes_decrypt(encrypted, password)
-    print(decrypted)
-
     end = time.time()
     print("time is ms",  end-start)
 
