@@ -4,7 +4,6 @@ from math import pow
 # Asymmetric (private + public)
 
 
-
 a = random.randint(2, 10)
 
 # To fing gcd(greatest common divisor) of two numbers
@@ -36,20 +35,18 @@ def power(a, b, c):
     return x % c
 
 
-
 # For asymetric encryption
 def encryption(msg, q, h, g):
-    ct = []
-    k = gen_key(q)
+    en_msg = []
+    k = gen_key(q)  # private key for sender
     s = power(h, k, q)
     p = power(g, k, q)
     for i in range(0, len(msg)):
-        ct.append(msg[i])
-    # print("g^k used= ", p)
-    # print("g^ak used= ", s)
-    for i in range(0, len(ct)):
-        ct[i] = s*ord(ct[i])
-    return ct, p
+        en_msg .append(msg[i])
+    for i in range(0, len(en_msg)):
+        en_msg[i] = s*ord(en_msg[i])
+    return en_msg, p
+
 
 # For decryption
 def decryption(ct, p, key, q):
@@ -57,29 +54,23 @@ def decryption(ct, p, key, q):
     h = power(p, key, q)
     for i in range(0, len(ct)):
         pt.append(chr(int(ct[i]/h)))
-    return pt
+    return ''.join(pt)
 
 
-def main():
-    msg = 'this is the message to enc'
-    # print("Original Message :", msg)
-    q = random.randint(pow(10, 20), pow(10, 50))
-    g = random.randint(2, q)
-    key = gen_key(q)  # Private key for receiver
-    key_two = gen_key(q)
-    print(key == key_two)
-    h = power(g, key, q)
+# def main():
+#     msg = 'this is the message to enc'
+#     q = random.randint(pow(10, 20), pow(10, 50))
+#     g = random.randint(2, q)
+#     key = gen_key(q)  # Private key for receiver
 
-    # print("g used : ", g)
-    # print("g^a used : ", h)
+#     h = power(g, key, q)
 
-    en_msg, p = encryption(msg, q, h, g)
-    dr_msg = decryption(en_msg, p, key, q)
-    dmsg = ''.join(dr_msg)
-
-    # print(en_msg)
-    # print("Decrypted Message :", dmsg)
+#     en_msg, p = encryption(msg, q, h, g)
+#     # dr_msg = decryption(en_msg, p, key, q)
+#     # print("Encrypted Message", en_msg)
+#     # print("Decrypted Message :", dr_msg)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
+    
