@@ -7,7 +7,8 @@ from Cryptodome.Random import get_random_bytes
 
 from string_key import generate_random_key
 
-def aes_encrypt(plain_text, password):
+def aes_encrypt(plain_text):
+    password = "1234567"
     salt = get_random_bytes(AES.block_size)
     # use the Scrypt KDF to get a private key from the password
     # private_key = hashlib.scrypt(
@@ -31,7 +32,8 @@ def aes_encrypt(plain_text, password):
     }
 
 
-def aes_decrypt(enc_dict, password):
+def aes_decrypt(enc_dict):
+    password = "1234567"
     # decode the dictionary entries from base64
     salt = b64decode(enc_dict['salt'])
     cipher_text = b64decode(enc_dict['cipher_text'])
@@ -49,16 +51,16 @@ def aes_decrypt(enc_dict, password):
 
     return bytes.decode(decrypted)
 
-def main():
-    start = time.time()
-    password = "123456"
-    plain_text = "this is the message to encrypt"
-    encrypted = aes_encrypt(plain_text, password)
-    decrypted = aes_decrypt(encrypted, password)
-    end = time.time()
-    print("time is ms",  end-start)
+# def main():
+#     start = time.time()
+#     password = "123456"
+#     plain_text = "this is the message to encrypt"
+#     encrypted = aes_encrypt(plain_text, password)
+#     decrypted = aes_decrypt(encrypted, password)
+#     end = time.time()
+#     print("time is ms",  end-start)
 
-main()
+# main()
 """
 
 """

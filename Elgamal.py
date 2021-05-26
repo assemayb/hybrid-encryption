@@ -1,8 +1,6 @@
 import random
 from math import pow
 
-# Asymmetric (private + public)
-
 
 a = random.randint(2, 10)
 
@@ -36,19 +34,23 @@ def power(a, b, c):
 
 
 # For asymetric encryption
-def encryption(msg, q, h, g):
+def encryption(msg, q, h, g, x):
+
     en_msg = []
+
     k = gen_key(q)  # private key for sender
     s = power(h, k, q)
-    p = power(g, k, q)
+    p = power(g, k, q)  # the public key
+
     for i in range(0, len(msg)):
         en_msg .append(msg[i])
     for i in range(0, len(en_msg)):
         en_msg[i] = s*ord(en_msg[i])
-    return en_msg, p
-
+    return en_msg, p, x
 
 # For decryption
+
+
 def decryption(ct, p, key, q):
     pt = []
     h = power(p, key, q)
@@ -56,21 +58,17 @@ def decryption(ct, p, key, q):
         pt.append(chr(int(ct[i]/h)))
     return ''.join(pt)
 
-
 # def main():
 #     msg = 'this is the message to enc'
 #     q = random.randint(pow(10, 20), pow(10, 50))
 #     g = random.randint(2, q)
-#     key = gen_key(q)  # Private key for receiver
 
-#     h = power(g, key, q)
+#     key = gen_key(q)  # Private key for receiver
+#     h = power(g, key, q) # public key for reciever
 
 #     en_msg, p = encryption(msg, q, h, g)
-#     # dr_msg = decryption(en_msg, p, key, q)
-#     # print("Encrypted Message", en_msg)
-#     # print("Decrypted Message :", dr_msg)
+#     dr_msg = decryption(en_msg, p, key, q)
+#     print("Encrypted Message", en_msg)
+#     print("Decrypted Message :", dr_msg)
 
 
-# if __name__ == '__main__':
-#     main()
-    
